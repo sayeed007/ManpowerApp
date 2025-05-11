@@ -1,4 +1,4 @@
-package com.manpower_app
+package com.manpowerapp
 
 import android.app.Application
 import com.facebook.react.PackageList

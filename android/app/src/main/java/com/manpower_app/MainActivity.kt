@@ -1,4 +1,4 @@
-package com.manpower_app
+package com.manpowerapp
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

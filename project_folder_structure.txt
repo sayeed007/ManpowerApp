@@ -1,0 +1,75 @@
+```
+ManpowerApp/
+├── android/
+├── ios/
+├── src/
+│   ├── assets/
+│   │   ├── fonts/
+│   │   ├── images/
+│   │   └── icons/
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Button.tsx                  (Done)
+│   │   │   ├── Divider.tsx                 (Done)
+│   │   │   ├── Input.tsx                   (Done)
+│   │   │   ├── LoadingIndicator.tsx        (Done)
+│   │   │   ├── SocialButton                (Done)
+│   │   │   └── ...
+│   │   ├── auth/
+│   │   │   ├── LoginForm.tsx                (Done)
+│   │   │   ├── RegisterForm.tsx             (Done)
+│   │   │   ├── ForgotPasswordForm.tsx       (Done)
+│   │   │   ├── ForgotPasswordForm.tsx       (Done)
+│   │   │   ├── OtpVerificationForm.tsx      (Done)
+│   │   │   ├── ResetPasswordForm.tsx        (Done)
+│   │   │   └── ...
+│   │   └── ...
+│   ├── config/
+│   │   └── firebase.ts                     (Done)
+│   ├── constants/
+│   │   ├── colors.ts                       (Done)
+│   │   ├── dimensions.ts                   (Done)
+│   │   ├── routes.ts                       (Done)
+│   │   └── strings.ts                      (Done)
+│   ├── hooks/
+│   │   ├── useAuth.ts                      (Done)
+│   │   └── ...
+│   ├── navigation/
+│   │   ├── AppNavigator.tsx                (Done)
+│   │   ├── AuthNavigator.tsx               (Done)
+│   │   └── RootNavigator.tsx               (Done)
+│   ├── screens/
+│   │   ├── auth/
+│   │   │   ├── SplashScreen.tsx            (Done)
+│   │   │   ├── LoginScreen.tsx             (Done)
+│   │   │   ├── RegisterScreen.tsx          (Done)
+│   │   │   ├── ForgotPasswordScreen.tsx    (Done)
+│   │   │   └── ResetPasswordScreen.tsx     (Done)
+│   │   ├── main/
+│   │   │   ├── HomeScreen.tsx              (Done)
+│   │   │   ├── ProfileScreen.tsx           (Done)
+│   │   │   └── ...
+│   │   └── index.ts
+│   ├── services/
+│   │   ├── api.ts
+│   │   ├── auth.ts
+│   │   └── ...
+│   ├── store/
+│   │   ├── slices/
+│   │   │   ├── authSlice.ts
+│   │   │   └── ...
+│   │   └── index.ts
+│   ├── types/
+│   │   ├── navigation.types.ts
+│   │   ├── api.types.ts
+│   │   └── ...
+│   ├── utils/
+│   │   ├── validators.ts
+│   │   ├── formatters.ts
+│   │   └── ...
+│   └── App.tsx                         (Done)
+├── .gitignore
+├── index.js
+├── package.json
+└── tsconfig.json
+```
