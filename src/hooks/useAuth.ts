@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {appleAuth} from '@invertase/react-native-apple-authentication';
+// import {appleAuth} from '@invertase/react-native-apple-authentication';
 import {Platform} from 'react-native';
 
 type AuthError = {
@@ -113,47 +113,47 @@ export const useAuth = () => {
     setLoading(true);
     setAuthError(null);
 
-    try {
-      // Perform the apple authentication flow
-      const appleAuthResponse = await appleAuth.performRequest({
-        requestedOperation: appleAuth.Operation.LOGIN,
-        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
-      });
+    // try {
+    //   // Perform the apple authentication flow
+    //   const appleAuthResponse = await appleAuth.performRequest({
+    //     requestedOperation: appleAuth.Operation.LOGIN,
+    //     requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    //   });
 
-      // Ensure Apple returned a user identityToken
-      if (!appleAuthResponse.identityToken) {
-        throw new Error('Apple Sign In failed - no identity token returned');
-      }
+    //   // Ensure Apple returned a user identityToken
+    //   if (!appleAuthResponse.identityToken) {
+    //     throw new Error('Apple Sign In failed - no identity token returned');
+    //   }
 
-      // Create a credential for Firebase Auth
-      const credential = auth.AppleAuthProvider.credential(
-        appleAuthResponse.identityToken,
-        appleAuthResponse.nonce,
-      );
+    //   // Create a credential for Firebase Auth
+    //   const credential = auth.AppleAuthProvider.credential(
+    //     appleAuthResponse.identityToken,
+    //     appleAuthResponse.nonce,
+    //   );
 
-      // Sign in with the credential
-      const {user} = await auth().signInWithCredential(credential);
+    //   // Sign in with the credential
+    //   const {user} = await auth().signInWithCredential(credential);
 
-      // If this is the first sign-in and we have a full name
-      if (
-        appleAuthResponse.fullName &&
-        appleAuthResponse.fullName.givenName &&
-        appleAuthResponse.fullName.familyName
-      ) {
-        const displayName = `${appleAuthResponse.fullName.givenName} ${appleAuthResponse.fullName.familyName}`;
-        await user.updateProfile({displayName});
-      }
+    //   // If this is the first sign-in and we have a full name
+    //   if (
+    //     appleAuthResponse.fullName &&
+    //     appleAuthResponse.fullName.givenName &&
+    //     appleAuthResponse.fullName.familyName
+    //   ) {
+    //     const displayName = `${appleAuthResponse.fullName.givenName} ${appleAuthResponse.fullName.familyName}`;
+    //     await user.updateProfile({displayName});
+    //   }
 
-      return user;
-    } catch (error: any) {
-      setAuthError({
-        code: error.code || 'apple_sign_in_error',
-        message: error.message || 'An error occurred during Apple sign in',
-      });
-      return null;
-    } finally {
-      setLoading(false);
-    }
+    //   return user;
+    // } catch (error: any) {
+    //   setAuthError({
+    //     code: error.code || 'apple_sign_in_error',
+    //     message: error.message || 'An error occurred during Apple sign in',
+    //   });
+    //   return null;
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   // Sign out

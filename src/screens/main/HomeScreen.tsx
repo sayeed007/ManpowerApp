@@ -18,8 +18,19 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 import {COLORS} from '../../constants/colors';
+import {useAuth} from '../../hooks/useRedux';
 
 const HomeScreen: React.FC = () => {
+  // Access auth state from Redux
+  const {user, subscription, isSubscribed, initializing} = useAuth();
+  console.log(
+    user,
+    subscription,
+    isSubscribed,
+    initializing,
+    'store data..........',
+  );
+
   const [verificationStatus, setVerificationStatus] = useState<string | null>(
     null,
   );

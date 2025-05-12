@@ -12,9 +12,9 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // Ignore non-serializable values in the specified action types
-        ignoredActions: ['auth/setUser'],
+        ignoredActions: ['auth/setUser', 'auth/setSubscription'],
         // Ignore non-serializable paths
-        ignoredPaths: ['auth.user'],
+        ignoredPaths: ['auth.user', 'auth.subscription'],
       },
     }),
 });

@@ -4,9 +4,11 @@ import {Provider as PaperProvider} from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import Toast from 'react-native-toast-message';
+import {Provider as ReduxProvider} from 'react-redux';
 import {configureGoogleSignIn, initializeFirebase} from './src/config/firebase';
 import {COLORS} from './src/constants/colors';
 import RootNavigator from './src/navigation/RootNavigator';
+import store from './src/store';
 
 // Ignore specific warnings
 LogBox.ignoreLogs([
@@ -59,18 +61,20 @@ const App = () => {
   }
 
   return (
-    <SafeAreaProvider>
-      <PaperProvider>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={COLORS.background}
-        />
-        <RootNavigator />
+    <ReduxProvider store={store}>
+      <SafeAreaProvider>
+        <PaperProvider>
+          <StatusBar
+            barStyle="dark-content"
+            backgroundColor={COLORS.background}
+          />
+          <RootNavigator />
 
-        {/* Add Toast component at the bottom of the screen */}
-        <Toast config={{}} />
-      </PaperProvider>
-    </SafeAreaProvider>
+          {/* Add Toast component at the bottom of the screen */}
+          <Toast config={{}} />
+        </PaperProvider>
+      </SafeAreaProvider>
+    </ReduxProvider>
   );
 };
 
