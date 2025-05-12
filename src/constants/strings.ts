@@ -74,4 +74,23 @@ export const STRINGS = {
   SUBMIT: 'Submit',
   CONTINUE_WITH_GOOGLE: 'Continue with Google',
   CONTINUE_WITH_APPLE: 'Continue with Apple',
+
+  // Subscription
+  COMPANY_DETAILS: 'Company/Agency Details',
+  COMPANY_DESCRIPTION: "Fill your Company/Agency's basic information",
+  SAME_ADDRESS: 'Same as registration address',
+  // Key
+  COMPANY_DETAILS_VALUE: 'Company Details',
+  CONTACT_PERSON_DETAILS_VALUE: 'Contact Person Details',
+  DOCUMENT_VARIFICATION_VALUE: 'Verify Documents',
+  PACKAGE_DETAILS_VALUE: 'Choose Package',
+  // Value
+  COMPANY_DETAILS_KEY: 'CompanyDetails',
+  CONTACT_PERSON_DETAILS_KEY: 'ContactPersonDetails',
+  DOCUMENT_VARIFICATION_KEY: 'VerifyDocuments',
+  PACKAGE_DETAILS_KEY: 'ChoosePackage',
+  //
+  CONTACT_PERSON_DESCRIPTION: 'Please provide the contact person details.',
+  DOCUMENT_VARIFICATION_DESCRIPTION: 'Please upload the required documents.',
+  VERIFY_DOCUMENTS: 'Verify Documents',
 };

@@ -10,7 +10,7 @@ import {
   TextStyle,
 } from 'react-native';
 import {COLORS} from '../../constants/colors';
-import {FONT_SIZE, SPACING} from '../../constants/dimensions';
+import {FONT_SIZES, SPACING} from '../../constants/dimensions';
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
@@ -86,12 +86,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.buttonText,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZES.md,
     fontWeight: '600',
   },
   outlineButtonText: {
     color: COLORS.primary,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZES.md,
     fontWeight: '600',
   },
 });

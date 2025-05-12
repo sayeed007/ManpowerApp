@@ -10,7 +10,7 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import {COLORS} from '../../constants/colors';
-import {FONT_SIZE, SPACING} from '../../constants/dimensions';
+import {FONT_SIZES, SPACING} from '../../constants/dimensions';
 
 interface SocialButtonProps extends TouchableOpacityProps {
   title: string;
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.text,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZES.md,
     fontWeight: '500',
   },
 });

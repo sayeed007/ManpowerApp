@@ -1,15 +1,15 @@
 // src/components/common/Divider.tsx
 import React from 'react';
-import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { COLORS } from '../../constants/colors';
-import { FONT_SIZE, SPACING } from '../../constants/dimensions';
+import {View, Text, StyleSheet, ViewStyle} from 'react-native';
+import {COLORS} from '../../constants/colors';
+import {FONT_SIZES, SPACING} from '../../constants/dimensions';
 
 interface DividerProps {
   text?: string;
   containerStyle?: ViewStyle;
 }
 
-const Divider: React.FC<DividerProps> = ({ text, containerStyle }) => {
+const Divider: React.FC<DividerProps> = ({text, containerStyle}) => {
   if (!text) {
     return <View style={[styles.divider, containerStyle]} />;
   }
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.textLight,
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZES.sm,
     marginHorizontal: SPACING.sm,
   },
 });

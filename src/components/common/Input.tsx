@@ -1,4 +1,3 @@
-// src/components/common/Input.tsx
 import React from 'react';
 import {
   View,
@@ -10,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {COLORS} from '../../constants/colors';
-import {FONT_SIZE, SPACING} from '../../constants/dimensions';
+import {FONT_SIZES, SPACING} from '../../constants/dimensions';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface InputProps extends TextInputProps {
@@ -31,6 +30,8 @@ const Input: React.FC<InputProps> = ({
   rightIcon,
   isPassword = false,
   onRightIconPress,
+  multiline,
+  numberOfLines = 1, // Default to 1 for single-line, can be overridden
   ...rest
 }) => {
   const [secureTextEntry, setSecureTextEntry] = React.useState(isPassword);
@@ -79,12 +80,16 @@ const Input: React.FC<InputProps> = ({
           styles.inputContainer,
           error ? styles.inputError : null,
           leftIcon ? styles.inputWithLeftIcon : null,
+          multiline ? styles.multilineInputContainer : null, // Apply multiline-specific styles
         ]}>
         {renderLeftIcon()}
         <TextInput
-          style={styles.input}
-          placeholderTextColor={COLORS.textLight}
+          style={[styles.input, multiline ? styles.multilineInput : null]}
+          placeholderTextColor={COLORS.placeholder}
           secureTextEntry={secureTextEntry}
+          multiline={multiline}
+          numberOfLines={multiline ? numberOfLines : 1} // Set numberOfLines for multiline
+          textAlignVertical={multiline ? 'top' : 'center'} // Align text to top for multiline
           {...rest}
         />
         {renderRightIcon()}
@@ -96,11 +101,11 @@ const Input: React.FC<InputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: SPACING.md,
+    marginBottom: SPACING.sm,
   },
   label: {
     marginBottom: SPACING.xs,
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZES.sm,
     color: COLORS.text,
     fontWeight: '500',
   },
@@ -109,9 +114,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.border,
     borderRadius: 12,
-    backgroundColor: COLORS.inputBackground,
-    height: 48,
+    backgroundColor: COLORS.background,
     alignItems: 'center',
+  },
+  multilineInputContainer: {
+    alignItems: 'flex-start', // Align items to top for multiline
+    paddingVertical: SPACING.xs, // Add padding for better text spacing
   },
   inputWithLeftIcon: {
     paddingLeft: 0,
@@ -123,14 +131,18 @@ const styles = StyleSheet.create({
     flex: 1,
     color: COLORS.text,
     paddingHorizontal: SPACING.sm,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZES.xs,
+  },
+  multilineInput: {
+    //
   },
   errorText: {
     color: COLORS.error,
-    fontSize: FONT_SIZE.xs,
+    fontSize: FONT_SIZES.xs,
     marginTop: SPACING.xs,
   },
   leftIconContainer: {
+    alignSelf: 'center',
     paddingHorizontal: SPACING.sm,
   },
   rightIconContainer: {

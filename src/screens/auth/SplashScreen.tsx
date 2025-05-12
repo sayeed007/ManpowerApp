@@ -19,8 +19,8 @@ const SplashScreen: React.FC<SplashScreenProps> = ({navigation}) => {
       // For now, we'll just navigate to the Login screen
       navigation.reset({
         index: 0,
-        // routes: [{name: ROUTES.LOGIN}],
-        routes: [{name: ROUTES.REGISTER}],
+        routes: [{name: ROUTES.LOGIN}],
+        // routes: [{name: ROUTES.REGISTER}],
       });
     }, 1000); // 3 seconds delay
 

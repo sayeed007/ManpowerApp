@@ -107,7 +107,6 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({navigation}) => {
 
       // Prompt user to sign in
       const userInfo: any = await GoogleSignin.signIn();
-      console.log(userInfo);
       const idToken = userInfo?.data?.idToken;
 
       if (!idToken) {

@@ -3,13 +3,15 @@ export const COLORS = {
   primary: '#006FFD', // Purple color from your UI
   secondary: '#64DFDF',
   background: '#FFFFFF',
-  text: '#333333',
-  textLight: '#888888',
+  text: '#000000',
+  textLight: '#B1AEAE',
+  placeholder: '#8F9098',
   error: '#FF5252',
   success: '#4CAF50',
   border: '#E0E0E0',
   buttonText: '#FFFFFF',
   inputBackground: '#F5F5F5',
+  disabled: '#E0E0E0',
 
   primaryDark: '#3700B3',
   primaryLight: '#E8E3FF',

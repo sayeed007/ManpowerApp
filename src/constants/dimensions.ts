@@ -4,6 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export const SCREEN_WIDTH = Dimensions.get('window').width;
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -34,14 +35,18 @@ export const SPACING = {
   xxl: 40,
 };
 
+export const SPACING_H = {
+  one: hp('1%'),
+};
+
 export const FONT_SIZES = {
-  xs: 12,
-  sm: 14,
-  md: 16,
-  lg: 18,
-  xl: 20,
-  xxl: 24,
-  xxxl: 30,
+  xs: RFValue(12),
+  sm: RFValue(14),
+  md: RFValue(16),
+  lg: RFValue(18),
+  xl: RFValue(20),
+  xxl: RFValue(24),
+  xxxl: RFValue(30),
 };
 
 export const BORDER_RADIUS = {
@@ -57,11 +62,3 @@ export const IS_IOS = Platform.OS === 'ios';
 export const IS_ANDROID = Platform.OS === 'android';
 export const STATUS_BAR_HEIGHT = IS_IOS ? 20 : StatusBar.currentHeight || 0;
 export const HEADER_HEIGHT = 56 + STATUS_BAR_HEIGHT;
-
-export const FONT_SIZE = {
-  xs: wp('3%'),
-  sm: wp('3.5%'),
-  md: wp('4%'),
-  lg: wp('5%'),
-  xl: wp('6%'),
-};

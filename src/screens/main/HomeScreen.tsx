@@ -1,188 +1,240 @@
-import React from 'react';
-import {View, Text, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+// src/screens/main/HomeScreen.tsx
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 import {COLORS} from '../../constants/colors';
-import Button from '../../components/common/Button';
-import useAuth from '../../hooks/useAuth';
 
-const HomeScreen = () => {
-  const {signOut, loading} = useAuth();
-  const user = auth().currentUser;
+const HomeScreen: React.FC = () => {
+  const [verificationStatus, setVerificationStatus] = useState<string | null>(
+    null,
+  );
+  const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const handleSignOut = () => {
-    signOut();
-  };
+  useEffect(() => {
+    const user = auth().currentUser;
+    if (user) {
+      const subscriber = firestore()
+        .collection('subscriptions')
+        .doc(user.uid)
+        .onSnapshot(
+          doc => {
+            const data = doc.data();
+            setVerificationStatus(data?.verificationStatus || 'pending');
+            setLoading(false);
+          },
+          error => {
+            console.error('Error fetching verification status:', error);
+            setVerificationStatus('pending'); // Default to pending on error
+            setLoading(false);
+          },
+        );
+      return () => subscriber();
+    } else {
+      setVerificationStatus('pending');
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </View>
+    );
+  }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Welcome to Manpower</Text>
-          <Text style={styles.subtitle}>
-            Hello, {user?.displayName || 'User'}
-          </Text>
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.greetingContainer}>
+          <Icon name="home" size={20} color={COLORS.textLight} />
+          <Text style={styles.greeting}>Good Morning</Text>
+          <Text style={styles.appName}>PEFC Global</Text>
         </View>
-
-        <View style={styles.content}>
-          <Text style={styles.sectionTitle}>Dashboard</Text>
-
-          {/* This is just a placeholder. You'll replace this with actual dashboard content */}
-          <View style={styles.dashboardContainer}>
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>5</Text>
-              <Text style={styles.statLabel}>Active Jobs</Text>
-            </View>
-
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>12</Text>
-              <Text style={styles.statLabel}>Applications</Text>
-            </View>
-
-            <View style={styles.statCard}>
-              <Text style={styles.statNumber}>3</Text>
-              <Text style={styles.statLabel}>Messages</Text>
-            </View>
-          </View>
-
-          <Text style={styles.sectionTitle}>Recent Activity</Text>
-
-          {/* Placeholder for recent activity */}
-          <View style={styles.activityContainer}>
-            <View style={styles.activityItem}>
-              <View style={styles.activityDot} />
-              <View style={styles.activityContent}>
-                <Text style={styles.activityTitle}>New job posting</Text>
-                <Text style={styles.activityTime}>2 hours ago</Text>
-              </View>
-            </View>
-
-            <View style={styles.activityItem}>
-              <View style={styles.activityDot} />
-              <View style={styles.activityContent}>
-                <Text style={styles.activityTitle}>Application received</Text>
-                <Text style={styles.activityTime}>5 hours ago</Text>
-              </View>
-            </View>
-
-            <View style={styles.activityItem}>
-              <View style={styles.activityDot} />
-              <View style={styles.activityContent}>
-                <Text style={styles.activityTitle}>Message from John Doe</Text>
-                <Text style={styles.activityTime}>Yesterday</Text>
-              </View>
-            </View>
-          </View>
+        <View style={styles.headerIcons}>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="help-outline" size={20} color={COLORS.textLight} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="notifications" size={20} color={COLORS.textLight} />
+          </TouchableOpacity>
         </View>
+      </View>
 
-        <Button
-          title="Sign Out"
-          onPress={handleSignOut}
-          loading={loading}
-          style={styles.signOutButton}
+      {/* Search Bar */}
+      <View style={styles.searchContainer}>
+        <Icon
+          name="search"
+          size={20}
+          color={COLORS.textLight}
+          style={styles.searchIcon}
         />
-      </ScrollView>
-    </SafeAreaView>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search here..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          placeholderTextColor={COLORS.textLight}
+        />
+      </View>
+
+      {/* Content */}
+      <View style={styles.content}>
+        {verificationStatus === 'pending' ? (
+          <>
+            <View style={styles.illustration}>
+              {/* Placeholder for illustration (use an image or SVG component) */}
+              <Icon name="folder" size={100} color={COLORS.primary} />
+              <Icon
+                name="cloud"
+                size={80}
+                color={COLORS.primary}
+                style={styles.cloud}
+              />
+              <Icon
+                name="search"
+                size={60}
+                color={COLORS.primary}
+                style={styles.magnifyingGlass}
+              />
+              <Icon
+                name="insert-chart"
+                size={50}
+                color={COLORS.primary}
+                style={styles.chart}
+              />
+            </View>
+            <Text style={styles.title}>Verification Pending!!</Text>
+            <Text style={styles.subtitle}>
+              Please wait for admin to approve your profile
+            </Text>
+          </>
+        ) : (
+          <Text style={styles.title}>Welcome to Your Dashboard!</Text>
+          // Add dashboard content here when verified
+        )}
+      </View>
+
+      {/* Bottom Navigation Placeholder (Handled by AppNavigator) */}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: '#FFFFFF',
   },
-  scrollContent: {
-    padding: 20,
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
-    marginBottom: 30,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: COLORS.text,
-    marginBottom: 5,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: COLORS.textLight,
-  },
-  content: {
-    marginBottom: 30,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: COLORS.text,
-    marginBottom: 15,
-  },
-  dashboardContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 30,
-  },
-  statCard: {
-    backgroundColor: COLORS.white,
-    borderRadius: 12,
-    padding: 15,
-    width: '30%',
     alignItems: 'center',
-    shadowColor: COLORS.shadow,
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    padding: wp('5%'),
+    backgroundColor: '#E6F0FA',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
-  statNumber: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: COLORS.primary,
-    marginBottom: 5,
-  },
-  statLabel: {
-    fontSize: 12,
-    color: COLORS.textLight,
-    textAlign: 'center',
-  },
-  activityContainer: {
-    backgroundColor: COLORS.white,
-    borderRadius: 12,
-    padding: 15,
-    shadowColor: COLORS.shadow,
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  activityItem: {
+  greetingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
   },
-  activityDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: COLORS.primary,
-    marginRight: 10,
-  },
-  activityContent: {
-    flex: 1,
-  },
-  activityTitle: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: COLORS.text,
-    marginBottom: 2,
-  },
-  activityTime: {
-    fontSize: 12,
+  greeting: {
+    fontSize: RFValue(16),
     color: COLORS.textLight,
+    marginLeft: wp('2%'),
   },
-  signOutButton: {
-    marginTop: 20,
+  appName: {
+    fontSize: RFValue(16),
+    fontWeight: 'bold',
+    color: COLORS.textDark,
+    marginLeft: wp('1%'),
+  },
+  headerIcons: {
+    flexDirection: 'row',
+    gap: wp('3%'),
+  },
+  iconButton: {
+    padding: 8,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 15,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F0F4F8',
+    borderRadius: 20,
+    margin: wp('5%'),
+    paddingHorizontal: wp('3%'),
+    elevation: 2,
+  },
+  searchIcon: {
+    marginRight: wp('2%'),
+  },
+  searchInput: {
+    flex: 1,
+    height: hp('6%'),
+    fontSize: RFValue(14),
+    color: COLORS.textDark,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: wp('5%'),
+  },
+  illustration: {
+    position: 'relative',
+    alignItems: 'center',
+  },
+  cloud: {
+    position: 'absolute',
+    top: -20,
+    left: 20,
+  },
+  magnifyingGlass: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+  },
+  chart: {
+    position: 'absolute',
+    bottom: 20,
+    left: 30,
+  },
+  title: {
+    fontSize: RFValue(24),
+    fontWeight: '700',
+    color: COLORS.textDark,
+    marginTop: hp('3%'),
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: RFValue(16),
+    color: COLORS.textLight,
+    textAlign: 'center',
+    marginTop: hp('2%'),
   },
 });
 
