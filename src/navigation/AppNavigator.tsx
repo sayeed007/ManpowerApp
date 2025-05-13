@@ -9,6 +9,8 @@ import {ROUTES} from '../constants/routes';
 // Import main screens
 import HomeScreen from '../screens/main/HomeScreen';
 import ProfileScreen from '../screens/main/ProfileScreen';
+import {TabBarAdvancedButton} from '../components/tab/TabBarAdvancedButton';
+import {StyleSheet, Text} from 'react-native';
 
 // Create navigators
 const Tab = createBottomTabNavigator();
@@ -27,6 +29,10 @@ const MainStackNavigator = () => {
   );
 };
 
+const toggleModal = () => {
+  // setQuickActionModalVisible(!isQuickActionModalVisible);
+};
+
 // Tab navigator for the main app flow
 const AppNavigator = () => {
   return (
@@ -36,11 +42,7 @@ const AppNavigator = () => {
         tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: COLORS.textLight,
         tabBarStyle: {
-          backgroundColor: COLORS.white,
-          borderTopWidth: 1,
-          borderTopColor: COLORS.border,
-          paddingBottom: 10,
-          height: 60,
+          ...styles.tabBarStyle,
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -57,6 +59,17 @@ const AppNavigator = () => {
           ),
         }}
       />
+
+      <Tab.Screen
+        name="Add"
+        options={{
+          tabBarButton: props => (
+            <TabBarAdvancedButton {...props} onPress={toggleModal} />
+          ),
+        }}>
+        {() => null}
+      </Tab.Screen>
+
       <Tab.Screen
         name={ROUTES.PROFILE}
         component={ProfileScreen}
@@ -71,5 +84,19 @@ const AppNavigator = () => {
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+  },
+  tabBarStyle: {
+    backgroundColor: COLORS.white,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.border,
+    paddingBottom: 10,
+    height: 60,
+    elevation: 4,
+  },
+});
 
 export default AppNavigator;
